@@ -4,13 +4,13 @@
 "description": "A simple HTML/CSS/JS game application.",
 "main": "index.js",
 "scripts": {
-"test": "jest",
-"elements": ["**/*.html", "!node_modules/**/*.html"]
-"lint": "npm run lint:js && npm run lint:css && npm run lint:html",
-"lint:js": "eslint .",
-"lint:css": "stylelint \"**/*.css\"",
-"lint:html": "html-validate --ext .html .",
-"build": "webpack --mode production"
+ "test": "jest",
+  "elements": ["**/*.html", "!node_modules/**/*.html"],
+  "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+  "lint:js": "eslint .",
+  "lint:css": "stylelint \"**/*.css\"",
+  "lint:html": "html-validate --ext .html .",
+  "build": "webpack --mode production"
 },
 "keywords": [],
 "author": "",
