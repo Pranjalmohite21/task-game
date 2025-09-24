@@ -5,6 +5,7 @@
 "main": "index.js",
 "scripts": {
 "test": "jest",
+"elements": ["**/*.html", "!node_modules/**/*.html"]
 "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
 "lint:js": "eslint .",
 "lint:css": "stylelint \"**/*.css\"",
