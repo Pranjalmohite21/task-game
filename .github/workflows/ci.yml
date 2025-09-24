@@ -1,9 +1,5 @@
-# This workflow's name is "CI Pipeline".
 name: CI Pipeline
 
-# This specifies when the workflow should run.
-# It runs on 'push' events to branches that start with 'feature/',
-# and on 'pull_request' events targeting the 'main' branch.
 on:
   push:
     branches:
@@ -12,40 +8,27 @@ on:
     branches:
       - main
 
-# A workflow is made up of one or more jobs. This is our main job.
 jobs:
   build:
-    # This job runs on the latest version of the Ubuntu operating system.
     runs-on: ubuntu-latest
     
-    # A job contains a sequence of steps.
     steps:
-      # Step 1: Check out the code.
-      # This action checks out your repository onto the runner, so the workflow can access your code.
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js.
-      # This is necessary to install and run your testing and linting tools.
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '16'
 
-      # Step 3: Install project dependencies.
-      # This runs `npm install` to get all the packages listed in your package.json file.
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run automated tests.
-      # This assumes you have a test script defined in your package.json file.
       - name: Run automated tests
         run: npm test
         
-      # Step 5: Lint the code.
-      # These steps check your code for syntax errors and style inconsistencies.
       - name: Lint HTML
-        run: npx html-validate --ext .html .
+        run: npx html-validate --ext .html . --ignore-pattern 'node_modules/**/*.html'
         
       - name: Lint CSS
         run: npx stylelint "**/*.css"
@@ -53,7 +36,5 @@ jobs:
       - name: Lint JavaScript
         run: npx eslint .
       
-      # Step 6: Build the application.
-      # This step runs a command to create the final optimized build of your app.
       - name: Build application
         run: npm run build
