@@ -9,7 +9,6 @@
   "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
   "lint:js": "eslint .",
   "lint:css": "stylelint \"**/*.css\"",
-  "lint:html": "html-validate --ext .html .",
   "build": "webpack --mode production"
 },
 "keywords": [],
