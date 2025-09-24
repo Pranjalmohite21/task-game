@@ -28,7 +28,7 @@ jobs:
         run: npm test
         
       - name: Lint HTML
-        run: npx html-validate --ext .html . --ignore-pattern 'node_modules/**/*.html'
+        run: npx html-validate --ext .html . 
         
       - name: Lint CSS
         run: npx stylelint "**/*.css"
