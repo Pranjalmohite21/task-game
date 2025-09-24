@@ -7,7 +7,7 @@
  "test": "jest",
   "elements": ["**/*.html", "!node_modules/**/*.html"],
   "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
- "lint:html": "html-validate --ext .html . --ignore-pattern 'node_modules/**/*.html'"
+ "lint:html": "html-validate --ext .html . --ignore-pattern 'node_modules/**/*.html'",
   "lint:js": "eslint .",
   "lint:css": "stylelint \"**/*.css\"",
   "build": "webpack --mode production"
