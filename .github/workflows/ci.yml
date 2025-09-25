@@ -22,7 +22,7 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm ci   # ensures all devDependencies, including stylelint-config-standard, are installed
+        run: npm install   # ensures all devDependencies, including stylelint-config-standard, are installed
 
       - name: Run automated tests
         run: npm test
