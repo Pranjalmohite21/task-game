@@ -22,7 +22,7 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci   # ensures all devDependencies, including stylelint-config-standard, are installed
 
       - name: Run automated tests
         run: npm test
@@ -31,7 +31,7 @@ jobs:
         run: npx html-validate --ext .html . 
         
       - name: Lint CSS
-        run: npx stylelint "**/*.css"
+        run: npx stylelint "**/*.css"  # will now find stylelint-config-standard
         
       - name: Lint JavaScript
         run: npx eslint .
