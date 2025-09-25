@@ -86,18 +86,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
+      # 1️⃣ Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up GCP SDK
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      # 2️⃣ Authenticate GCP service account
+      - name: Authenticate GCP service account
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" > key.json
+          gcloud auth activate-service-account --key-file=key.json
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-      # Deploy to Cloud Run
+      # 3️⃣ Deploy to Cloud Run
       - name: Deploy to Cloud Run
         run: |
           IMAGE_TAG=${GITHUB_SHA:0:8}
@@ -106,5 +106,4 @@ jobs:
             --image "$IMAGE_NAME" \
             --region us-central1 \
             --platform managed \
-            --allow-unauthenticated \
-            --project ${{ secrets.GCP_PROJECT_ID }}
+            --allow-unauthenticated
