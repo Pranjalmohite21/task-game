@@ -106,4 +106,5 @@ jobs:
             --image "$IMAGE_NAME" \
             --region us-central1 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --project ${{ secrets.GCP_PROJECT_ID }}
