@@ -1,26 +1,27 @@
 {
-"name": "my-game-app",
-"version": "1.0.0",
-"description": "A simple HTML/CSS/JS game application.",
-"main": "index.js",
-"scripts": {
- "test": "jest",
-  "elements": ["**/*.html", "!node_modules/**/*.html"],
-  "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
- "lint:html": "html-validate --ext .html . --ignore-pattern 'node_modules/**/*.html'",
-  "lint:js": "eslint .",
-  "lint:css": "stylelint \"**/*.css\"",
-  "build": "webpack --mode production"
-},
-"keywords": [],
-"author": "",
-"license": "ISC",
-"devDependencies": {
-"eslint": "^8.56.0",
-"html-validate": "^8.21.0",
-"jest": "^29.7.0",
-"stylelint": "^16.2.1",
-"webpack": "^5.90.3",
-"webpack-cli": "^5.1.4"
-}
+  "name": "my-game-app",
+  "version": "1.0.0",
+  "description": "A simple HTML/CSS/JS game application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "elements": ["**/*.html", "!node_modules/**/*.html"],
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+    "lint:html": "html-validate --ext .html . --ignore-pattern 'node_modules/**/*.html'",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint \"**/*.css\"",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "html-validate": "^8.21.0",
+    "jest": "^29.7.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^32.0.0",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  }
 }
