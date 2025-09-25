@@ -1,7 +1,7 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "indentation": 2,
-    "string-quotes": "double"
+    "font-family-name-quotes": "always-unless-keyword",
+    "color-hex-length": "short"
   }
 }
