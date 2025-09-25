@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       # 1️⃣ Checkout code
       - name: Checkout code
@@ -24,71 +24,83 @@ jobs:
         with:
           node-version: '16'
 
-      # 3️⃣ Install dependencies
+      # 3️⃣ Cache Node.js dependencies
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # 4️⃣ Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 4️⃣ Run automated tests
+      # 5️⃣ Run automated tests
       - name: Run automated tests
         run: npm test
-        
-      # 5️⃣ Lint HTML
+
+      # 6️⃣ Lint HTML
       - name: Lint HTML
-        run: npx html-validate --ext .html . 
-        
-      # 6️⃣ Lint CSS
+        run: npx html-validate --ext .html .
+
+      # 7️⃣ Lint CSS
       - name: Lint CSS
         run: npx stylelint "**/*.css"
-        
-      # 7️⃣ Lint JavaScript
+
+      # 8️⃣ Lint JavaScript
       - name: Lint JavaScript
         run: npx eslint .
-      
-      # 8️⃣ Build application
+
+      # 9️⃣ Build application
       - name: Build application
         run: npm run build
 
-      # 9️⃣ Build Docker image
+      # 🔟 Build Docker image
       - name: Build Docker image
         run: |
           IMAGE_NAME=my-game-app
-          IMAGE_TAG=${GITHUB_SHA::8}
-          REPO=pranjalmohite21/task-game   # all lowercase!
+          IMAGE_TAG=${GITHUB_SHA:0:8}
+          REPO=pranjalmohite21/task-game
           docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
           docker tag "$IMAGE_NAME:$IMAGE_TAG" "ghcr.io/$REPO:$IMAGE_TAG"
 
-      # 🔟 Log in to GitHub Container Registry
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v2
-      with:
-         registry: ghcr.io
-         username: ${{ github.actor }}
-         password: ${{ secrets.GHCR_PAT }}
+      # 1️⃣1️⃣ Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
 
-
-      # 1️⃣1️⃣ Push Docker image
+      # 1️⃣2️⃣ Push Docker image
       - name: Push Docker image
         run: |
-          IMAGE_TAG=${GITHUB_SHA::8}
+          IMAGE_TAG=${GITHUB_SHA:0:8}
           REPO=pranjalmohite21/task-game
           docker push "ghcr.io/$REPO:$IMAGE_TAG"
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
+      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up GCP SDK
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: your-gcp-project-id
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      # Deploy to Cloud Run
       - name: Deploy to Cloud Run
         run: |
-          IMAGE_TAG=${GITHUB_SHA::8}
+          IMAGE_TAG=${GITHUB_SHA:0:8}
           IMAGE_NAME=ghcr.io/pranjalmohite21/task-game:$IMAGE_TAG
           gcloud run deploy my-game-app \
             --image "$IMAGE_NAME" \
